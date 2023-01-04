@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan EMI calculator</title>
+    <style>
+        input[type=text], select{
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 2px solid rgb(48, 192, 67);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        label{
+            font-size: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        input[type=submit]{
+            width: 15%;
+            background-color: rgb(224, 49, 186);
+            color: rgb(240, 245, 244);
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        input[type=submit]:hover{
+            background-color: rgb(9, 255, 0);
+        }
+        div {
+            border-radius: 9px;
+            background-color: rgb(167, 214, 255);
+            padding: 20px;
+        }
+       
+      
+    </style>
+</head>
+<body>
+    <center>
+    <h1>LOAN EMI CALCULATOR</h1>
+    <div>
+        
+        <form action="" onsubmit="return false">
+            <label for="LoanAmount">Loan Amount :</label>
+            <input type="text" id="amount">
+            <br>
+            <label for="IntrestRate">Intrest Rate :</label>
+            <input type="text" id="rate">
+            <br> 
+            <label for="Years">Years to Pay :</label>
+            <input type="text" id="years">
+            <br>
+            <input type="submit" value="Calculate" onclick="calculate(amount.value,rate.value,years.value)">
+        </form>
+    </div>
+    <label for="output" id="demo"></label>
+    <script>
+        function calculate(amount,rate,years){
+            var p = parseInt(amount);
+            var r = parseFloat(rate);
+            var n = parseInt(years);
+
+            var monthly_interest = r/12/100;
+
+            var months = n * 12;
+
+            // P X R X (1+R)^N / [(1+R)^N-1] THIS IS LOAN EMI FORM
+
+            var X = Math.pow(1 + monthly_interest, months);
+            var monthly = (p * X * monthly_interest) / (X - 1);
+
+            var emi = monthly.toFixed(2);
+            var totalPayment = (emi * months).toFixed(2);
+            var totalIntrest = (totalPayment - p).toFixed(2);
+
+            document.getElementById("demo").innerHTML = "Loan EMI : " + "<b>" + emi + " Rs." + "</b>" + "<br>" + "Total Intrest Payable : " +
+             "<b>" + totalIntrest  + " Rs." + "</b>" + "<br>" + "Total Payment :" + "<b>" + totalPayment + " Rs." + "</b>";
+            
+
+        }
+    </script>
+    </center>
+</body>
+</html>
